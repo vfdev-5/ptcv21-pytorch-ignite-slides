@@ -10,13 +10,9 @@ src = "https://raw.githubusercontent.com/pytorch/ignite/master/assets/logo/ignit
 > Training and evaluating neural networks
 > flexibly and transparently
 
-Victor & Sylvain & Taras
+Victor, Sylvain & Taras
 
-_todo: add social links here_
 {{< social >}}
-
-_todo: add link to the presentation_
-
 
 ---
 

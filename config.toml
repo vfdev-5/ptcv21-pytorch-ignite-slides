@@ -1,0 +1,24 @@
+theme = "reveal-hugo"
+disableKinds = ["taxonomy", "term", "sitemap", "RSS"]
+baseURL = "https://vfdev-5.github.io/ptcv21-pytorch-ignite-slides/"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+codeFences = false
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
+
+[params.reveal_hugo]
+custom_theme = "pytorch-ignite-theme.scss"
+custom_theme_compile = true
+# theme = "white"
+highlight_theme = "monokai-sublime"
+width = 1280
+height = 720
+slide_number = true
+transition_speed = "fast"

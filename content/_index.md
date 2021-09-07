@@ -25,6 +25,9 @@ Victor, Sylvain & Taras
 
 ---
 
+<!-- Start vertical slides -->
+{{% section %}}
+
 # PyTorch-Ignite: what and why?
 
 > High-level **library** to help with training and evaluating neural networks in PyTorch flexibly and transparently.
@@ -35,3 +38,47 @@ Victor, Sylvain & Taras
 - Out-of-the-box metrics to easily evaluate models
 - Built-in handlers to compose training pipeline
 - Distributed Training support
+
+---
+
+# What makes Pytorch-Ignite unique ?
+
+...
+
+---
+
+# Simple Engine and Event System ?
+
+...
+
+
+---
+
+# Simple Engine and Event System ?
+
+...
+
+<!-- End vertical slides -->
+{{% /section %}}
+
+---
+
+<!-- Start vertical slides -->
+{{% section %}}
+
+# Quick-start example
+
+...
+
+---
+
+
+
+<!-- End vertical slides -->
+{{% /section %}}
+
+---
+
+# About the project
+
+...

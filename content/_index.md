@@ -43,18 +43,142 @@ Victor, Sylvain & Taras
 
 # What makes Pytorch-Ignite unique ?
 
-...
+- Library at the crossroads of 
+  - High-level Plug & Play features
+  - Under-the-hood expansion possibilities
+
+- Help to promote best pratices 
+  - Using simple and coherent concepts
+  - Transparently, without magic 
+  
+- Keep it simple and understandable
+---
+
+# Key concepts in a nutshell
+
+- Engine
+  - Loop over the user data
+  - Apply an arbitrary user function on each data
+
+- Event System
+  - Customizable collections of Events
+  - Emitting system of Handlers attached to Events
+
+> Reactive programming concepts
 
 ---
 
-# Simple Engine and Event System ?
+# In its simplest form
 
-...
+```python
+fire_event(Events.STARTED)
+while epoch < max_epochs:
+    fire_event(Events.EPOCH_STARTED)
 
+    # run once on data
+    for batch in data:
+        fire_event(Events.ITERATION_STARTED)
+
+        output = process_function(batch)
+
+        fire_event(Events.ITERATION_COMPLETED)
+        
+    fire_event(Events.EPOCH_COMPLETED)
+fire_event(Events.COMPLETED)
+```
 
 ---
 
-...
+# Do what you want !
+
+```python
+def process_function(engine, batch):
+    # Do what you want ...
+    # ... and return what you want
+
+engine = Engine(process_function)
+
+engine.run(data, max_epochs=50)
+```
+
+- A minimalist API for maximum freedom
+  - Each Engine contains a sharable State to cache results and outputs
+
+---
+
+# When you want !
+
+```python
+@engine.on(Events.STARTED)
+def handler():
+    # Do what you want when you want !
+    # here at every Events.STARTED event triggered by the engine's Event System
+```
+
+- Highly flexible and customizable 
+  - Custom user Events
+  - Event filtering 
+  - Handlers can be lambda, objects, functions, methods
+
+---
+
+# Built-in Metrics
+
+- Dedicated to many Deep Learning tasks
+- Easily composable to assemble a custom metric 
+- Easily extendable to create custom metrics
+
+---
+
+# Built-in Handlers
+
+- Logging to experiment tracking systems
+- Optimizer’s parameter scheduling
+- Smart checkpointing
+- and a lot more !
+
+---
+
+# Distributed training made easy
+
+- Run the same code across all supported backends seamlessly
+  - backends from native torch distributed configuration: `nccl`, `gloo`, `mpi`
+  - Horovod framework with `gloo` or `nccl` communication backend
+  - XLA on TPUs via `pytorch/xla`
+
+```python
+import ignite.distributed as idist
+```
+
+---
+
+# Distributed launchers
+
+- Handle distributed launchers with the same code
+  - `torch.multiprocessing.spawn`
+  - `torch.distributed.launch`
+  - `horovodrun`
+  - `slurm`
+
+```python
+def run(_, config):
+  # distributed function
+  # Do what you want
+
+with idist.Parallel(backend=backend) as parallel:
+    parallel.run(run, config)
+```
+
+---
+
+# Unified Distributed API
+
+- High-level helper methods
+  - `idist.auto_model()` 
+  - `idist.auto_optim()` 
+  - `idist.auto_dataloader()`
+- Collective operations
+  - `all_reduce`, `all_gather`, and more
 
 <!-- End vertical slides -->
 {{% /section %}}

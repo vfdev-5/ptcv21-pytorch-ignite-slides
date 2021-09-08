@@ -9,6 +9,11 @@ This repo is under the [MIT License](LICENSE).
 
 ## Instructions for Building Slides
 
+0. Clone the repository with `--recursive` option:
+```bash
+git clone --recursive https://github.com/vfdev-5/ptcv21-pytorch-ignite-slides
+```
+
 1. Install [hugo](https://gohugo.io/getting-started/installing/)
 
 2. For development:

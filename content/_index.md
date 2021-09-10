@@ -43,28 +43,31 @@ Victor, Sylvain & Taras
 
 # What makes Pytorch-Ignite unique ?
 
-- Library at the crossroads of 
+- A library at the crossroads 
   - High-level Plug & Play features
-  - Under-the-hood expansion possibilities
+  - Expansion possibilities under the hood
 
-- Help to promote best pratices 
-  - Using simple and coherent concepts
-  - Transparently, without magic 
+- Highly modular
+  - Use of simple and consistent concepts
+  - Composable and interoperable components
+  - Transparent, without magic 
   
 - Keep it simple and understandable
+  - Contribute to the promotion of best practices 
+
 ---
 
 # Key concepts in a nutshell
 
 - Engine
-  - Loop over the user data
+  - Loop on user data
   - Apply an arbitrary user function on each data
 
-- Event System
-  - Customizable collections of Events
-  - Emitting system of Handlers attached to Events
+- Event system
+  - Customizable event collections
+  - Triggering system for handlers attached to events
 
-> Reactive programming concepts
+- In the spirit of Reactive Programming
 
 ---
 
@@ -122,6 +125,12 @@ def handler():
 
 ---
 
+# The Big Picture
+
+{{< figure src="images/Ignite_Big_Picture.png" >}}
+
+---
+
 # Built-in Metrics
 
 - Dedicated to many Deep Learning tasks
@@ -142,7 +151,7 @@ def handler():
 # Distributed training made easy
 
 - Run the same code across all supported backends seamlessly
-  - backends from native torch distributed configuration: `nccl`, `gloo`, `mpi`
+  - Backends from native torch distributed configuration: `nccl`, `gloo`, `mpi`
   - Horovod framework with `gloo` or `nccl` communication backend
   - XLA on TPUs via `pytorch/xla`
 

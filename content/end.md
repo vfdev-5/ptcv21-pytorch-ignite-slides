@@ -10,7 +10,9 @@ weight = 5
 ## Thanks for watching
 ## and listening !
 
-_Questions ?_
+_Questions?_
+
+🙋👩‍💻🙋👨‍💻👩‍💻
 
 </td>
 

@@ -6,7 +6,7 @@ weight = 1
 <!-- Start vertical slides -->
 {{% section %}}
 
-# PyTorch-Ignite: what and why?
+# PyTorch-Ignite: what and why? 🤔
 
 > High-level **library** to help with training and evaluating neural networks in PyTorch flexibly and transparently.
 
@@ -189,7 +189,7 @@ trainer.run(training_data_loader, max_epochs=100)
 
 ---
 
-### Power of Events & Handlers
+### Power of Events & Handlers 🚀
 
 #### 1. Execute any number of functions whenever you wish
 
@@ -289,7 +289,7 @@ def function_before_backprop(engine):
 
 ---
 
-# Out-of-the-box metrics
+# Out-of-the-box metrics 📈
 
 50+ distributed ready out-of-the-box metrics to easily evaluate models.
 

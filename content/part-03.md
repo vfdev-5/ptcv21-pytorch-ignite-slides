@@ -5,7 +5,7 @@ weight = 3
 <!-- Start vertical slides -->
 {{% section %}}
 
-# Convert PyTorch to Ignite
+# 🔥 Convert PyTorch to Ignite ❤️‍🔥
 
 How to translate pure PyTorch code to PyTorch+Ignite
 

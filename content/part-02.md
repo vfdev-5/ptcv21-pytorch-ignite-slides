@@ -5,7 +5,7 @@ weight = 2
 <!-- Start vertical slides -->
 {{% section %}}
 
-# Quick-start example
+# Quick-start example 👩‍💻👨‍💻
 
 Let's train your first MNIST classifier with PyTorch-Ignite!
 

@@ -7,18 +7,21 @@ weight = 2
 
 # Quick-start example 👩‍💻👨‍💻
 
-Let's train your first MNIST classifier with PyTorch-Ignite!
+Let's train a MNIST classifier with PyTorch-Ignite!
 
 ---
 
 ### Installation
 
+With `pip`:
 ```bash
 $ pip install pytorch-ignite
 ```
+or with `conda`:
 ```bash
 $ conda install ignite -c pytorch
 ```
+
 ---
 
 ### Import, import, import...
@@ -34,16 +37,15 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 from ignite.engine import Engine, Events, create_supervised_trainer, create_supervised_evaluator
 from ignite.metrics import Accuracy, Loss
 from ignite.handlers import ModelCheckpoint
-from ignite.contrib.handlers import TensorboardLogger, global_step_from_engine
+from ignite.contrib.handlers import TensorboardLogger
 ```
 
 ---
 
-### Start with your PyTorch code
-
-Set the dataflow, define a model, a loss and an optimizer.
+### Start with a PyTorch code
 
 <div style="font-size: 22px;">
+Set up the dataflow, define a model (adapted ResNet18), a loss and an optimizer.
 
 ```python{1-7|9-20|22-23}
 data_transform = Compose([ToTensor(), Normalize((0.1307,), (0.3081,))])
@@ -88,6 +90,10 @@ train_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device
 val_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=device)
 ```
 
+- `trainer` engine to train the model
+- `train_evaluator` engine to compute metrics on training set
+- `val_evaluator` engine to compute metrics on validation set + save the best models
+
 ---
 
 #### Add handlers for logging the progress
@@ -120,16 +126,15 @@ def log_validation_results(trainer):
 
 ---
 
-#### Add ModelCheckpoint handler with accuracy as a score function
+#### Add `ModelCheckpoint` handler with accuracy as a score function
 
-```python{1-8|10}
+```python
 model_checkpoint = ModelCheckpoint(
     "checkpoint",
     n_saved=2,
     filename_prefix="best",
     score_function=lambda e: e.state.metrics["accuracy"],
     score_name="accuracy",
-    global_step_transform=global_step_from_engine(trainer),
 )
 
 val_evaluator.add_event_handler(Events.COMPLETED, model_checkpoint, {"model": model})
@@ -139,9 +144,9 @@ val_evaluator.add_event_handler(Events.COMPLETED, model_checkpoint, {"model": mo
 
 #### Add Tensorboard Logger
 
-<div style="font-size: 30px;">
+<div style="font-size: 22px;">
 
-```python{1|3-8|10-17}
+```python
 tb_logger = TensorboardLogger(log_dir="tb-logger")
 
 tb_logger.attach_output_handler(
@@ -171,7 +176,7 @@ for tag, evaluator in [("training", train_evaluator), ("validation", val_evaluat
 trainer.run(train_loader, max_epochs=5)
 ```
 
-```python{1-6|8-14}
+```python
 Epoch[1], Iter[100] Loss: 0.19
 Epoch[1], Iter[200] Loss: 0.13
 Epoch[1], Iter[300] Loss: 0.08
@@ -190,14 +195,17 @@ Validation Results - Epoch[5] Avg accuracy: 0.99 Avg loss: 0.03
 
 ---
 
-#### Inspect the results in TensorBoard!
+### Complete code
 
-```python{1|3|4}
-tb_logger.close()
+https://pytorch-ignite.ai/tutorials/getting-started
 
-%load_ext tensorboard
-%tensorboard --logdir=.
-```
+
+---
+
+### PyTorch-Ignite Code-Generator
+
+https://code-generator.pytorch-ignite.ai/
+
 
 <!-- End vertical slides -->
 {{% /section %}}

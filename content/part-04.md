@@ -53,9 +53,9 @@ More details here: https://pytorch-ignite.ai/ecosystem/
 
 - PyData Global Mentored Sprint 2020
 
-- Our new website development (thanks to _Jeff Yang_!)
+- Our [new website](https://pytorch-ignite.ai) development (thanks to _Jeff Yang_!)
 
-- PyTorch-Ignite Code-Generator project
+- [PyTorch-Ignite Code-Generator project](https://code-generator.pytorch-ignite.ai)
 
 _Stay tuned for upcoming events ..._
 

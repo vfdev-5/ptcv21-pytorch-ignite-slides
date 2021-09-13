@@ -204,12 +204,17 @@ https://pytorch-ignite.ai/tutorials/getting-started
 
 ### PyTorch-Ignite Code-Generator
 
-Web App aimed at generating training scripts promoting PyTorch-Ignite best practices.
+<img height="300" src="https://raw.githubusercontent.com/pytorch-ignite/code-generator/main/src/assets/code-generator-demo-1080p.gif"/>
+
+<div style="font-size: 20px;">
 
 https://code-generator.pytorch-ignite.ai/
 
-<img src="https://raw.githubusercontent.com/pytorch-ignite/code-generator/main/src/assets/code-generator-demo-1080p.gif"/>
+- **What is Code-Generator?**: web app to quickly produce quick-start python code for common training tasks in deep learning.
 
+- **Why to use Code-Generator?**: start working on a task without rewriting everything from scratch.
+
+</div>
 
 <!-- End vertical slides -->
 {{% /section %}}

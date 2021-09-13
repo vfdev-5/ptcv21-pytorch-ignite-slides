@@ -26,5 +26,5 @@ Slides: https://vfdev-5.github.io/ptcv21-pytorch-ignite-slides
 
 - PyTorch-Ignite: what and why?
 - Quick-start example
-- Convert PyTorch 2 Ignite
+- Convert PyTorch to Ignite
 - About the project

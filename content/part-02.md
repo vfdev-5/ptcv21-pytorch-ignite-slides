@@ -204,7 +204,11 @@ https://pytorch-ignite.ai/tutorials/getting-started
 
 ### PyTorch-Ignite Code-Generator
 
+Web App aimed at generating training scripts promoting PyTorch-Ignite best practices.
+
 https://code-generator.pytorch-ignite.ai/
+
+<img src="https://raw.githubusercontent.com/pytorch-ignite/code-generator/main/src/assets/code-generator-demo-1080p.gif"/>
 
 
 <!-- End vertical slides -->

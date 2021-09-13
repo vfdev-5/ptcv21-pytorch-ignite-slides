@@ -179,8 +179,8 @@ def training(local_rank, *args, **kwargs):
 backend = 'nccl'  # or 'gloo', 'horovod', 'xla-tpu' or None
 with idist.Parallel(backend) as parallel:
     parallel.run(training)
-</code></pre></div></section><section><h1 id=distributed-training-support-1>Distributed Training support</h1><h2 id=distributed-launchers>Distributed launchers</h2><p>Handle distributed launchers with the same code</p><ul><li><code>torch.multiprocessing.spawn</code></li><li><code>torch.distributed.launch</code></li><li><code>horovodrun</code></li><li><code>slurm</code></li></ul></section><section><h1 id=distributed-training-support-2>Distributed Training support</h1><h2 id=unified-distributed-api>Unified Distributed API</h2><ul><li><p>High-level helper methods</p><ul><li><code>idist.auto_model()</code></li><li><code>idist.auto_optim()</code></li><li><code>idist.auto_dataloader()</code></li></ul></li><li><p>Collective operations</p><ul><li><code>all_reduce</code>, <code>all_gather</code>, and more</li></ul></li></ul></section><section><h1 id=the-big-picture>The Big Picture</h1><img height=500 src=images/Ignite_Big_Picture.png></section></section><section><section data-shortcode-section><h1 id=quick-start-example->Quick-start example 👩‍💻👨‍💻</h1><p>Let&rsquo;s train your first MNIST classifier with PyTorch-Ignite!</p></section><section><h3 id=installation>Installation</h3><pre><code class=language-bash>$ pip install pytorch-ignite
-</code></pre><pre><code class=language-bash>$ conda install ignite -c pytorch
+</code></pre></div></section><section><h1 id=distributed-training-support-1>Distributed Training support</h1><h2 id=distributed-launchers>Distributed launchers</h2><p>Handle distributed launchers with the same code</p><ul><li><code>torch.multiprocessing.spawn</code></li><li><code>torch.distributed.launch</code></li><li><code>horovodrun</code></li><li><code>slurm</code></li></ul></section><section><h1 id=distributed-training-support-2>Distributed Training support</h1><h2 id=unified-distributed-api>Unified Distributed API</h2><ul><li><p>High-level helper methods</p><ul><li><code>idist.auto_model()</code></li><li><code>idist.auto_optim()</code></li><li><code>idist.auto_dataloader()</code></li></ul></li><li><p>Collective operations</p><ul><li><code>all_reduce</code>, <code>all_gather</code>, and more</li></ul></li></ul></section><section><h1 id=the-big-picture>The Big Picture</h1><img height=500 src=images/Ignite_Big_Picture.png></section></section><section><section data-shortcode-section><h1 id=quick-start-example->Quick-start example 👩‍💻👨‍💻</h1><p>Let&rsquo;s train a MNIST classifier with PyTorch-Ignite!</p></section><section><h3 id=installation>Installation</h3><p>With <code>pip</code>:</p><pre><code class=language-bash>$ pip install pytorch-ignite
+</code></pre><p>or with <code>conda</code>:</p><pre><code class=language-bash>$ conda install ignite -c pytorch
 </code></pre></section><section><h3 id=import-import-import>Import, import, import&mldr;</h3><pre><code class=language-python data-line-numbers=1-6|8-12>import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -191,8 +191,8 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 from ignite.engine import Engine, Events, create_supervised_trainer, create_supervised_evaluator
 from ignite.metrics import Accuracy, Loss
 from ignite.handlers import ModelCheckpoint
-from ignite.contrib.handlers import TensorboardLogger, global_step_from_engine
-</code></pre></section><section><h3 id=start-with-your-pytorch-code>Start with your PyTorch code</h3><p>Set the dataflow, define a model, a loss and an optimizer.</p><div style=font-size:22px><pre><code class=language-python data-line-numbers=1-7|9-20|22-23>data_transform = Compose([ToTensor(), Normalize((0.1307,), (0.3081,))])
+from ignite.contrib.handlers import TensorboardLogger
+</code></pre></section><section><h3 id=start-with-a-pytorch-code>Start with a PyTorch code</h3><div style=font-size:22px>Set up the dataflow, define a model (adapted ResNet18), a loss and an optimizer.<pre><code class=language-python data-line-numbers=1-7|9-20|22-23>data_transform = Compose([ToTensor(), Normalize((0.1307,), (0.3081,))])
 
 train_dataset = MNIST(download=True, root=&quot;.&quot;, transform=data_transform, train=True)
 val_dataset = MNIST(download=True, root=&quot;.&quot;, transform=data_transform, train=False)
@@ -224,7 +224,7 @@ val_metrics = {
 
 train_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=device)
 val_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=device)
-</code></pre></section><section><h4 id=add-handlers-for-logging-the-progress>Add handlers for logging the progress</h4><div style=font-size:26px><pre><code class=language-python data-line-numbers=1-3|5-11|13-19>@trainer.on(Events.ITERATION_COMPLETED(every=100))
+</code></pre><ul><li><code>trainer</code> engine to train the model</li><li><code>train_evaluator</code> engine to compute metrics on training set</li><li><code>val_evaluator</code> engine to compute metrics on validation set + save the best models</li></ul></section><section><h4 id=add-handlers-for-logging-the-progress>Add handlers for logging the progress</h4><div style=font-size:26px><pre><code class=language-python data-line-numbers=1-3|5-11|13-19>@trainer.on(Events.ITERATION_COMPLETED(every=100))
 def log_training_loss(engine):
     print(f&quot;Epoch[{engine.state.epoch}], Iter[{engine.state.iteration}] Loss: {engine.state.output:.2f}&quot;)
 
@@ -243,17 +243,16 @@ def log_validation_results(trainer):
     print(f&quot;Validation Results - Epoch[{trainer.state.epoch}] &quot;
           f&quot;Avg accuracy: {metrics['accuracy']:.2f} &quot;
           f&quot;Avg loss: {metrics['loss']:.2f}&quot;)
-</code></pre></div></section><section><h4 id=add-modelcheckpoint-handler-with-accuracy-as-a-score-function>Add ModelCheckpoint handler with accuracy as a score function</h4><pre><code class=language-python data-line-numbers=1-8|10>model_checkpoint = ModelCheckpoint(
+</code></pre></div></section><section><h4 id=add-modelcheckpoint-handler-with-accuracy-as-a-score-function>Add <code>ModelCheckpoint</code> handler with accuracy as a score function</h4><pre><code class=language-python>model_checkpoint = ModelCheckpoint(
     &quot;checkpoint&quot;,
     n_saved=2,
     filename_prefix=&quot;best&quot;,
     score_function=lambda e: e.state.metrics[&quot;accuracy&quot;],
     score_name=&quot;accuracy&quot;,
-    global_step_transform=global_step_from_engine(trainer),
 )
 
 val_evaluator.add_event_handler(Events.COMPLETED, model_checkpoint, {&quot;model&quot;: model})
-</code></pre></section><section><h4 id=add-tensorboard-logger>Add Tensorboard Logger</h4><div style=font-size:30px><pre><code class=language-python data-line-numbers=1|3-8|10-17>tb_logger = TensorboardLogger(log_dir=&quot;tb-logger&quot;)
+</code></pre></section><section><h4 id=add-tensorboard-logger>Add Tensorboard Logger</h4><div style=font-size:22px><pre><code class=language-python>tb_logger = TensorboardLogger(log_dir=&quot;tb-logger&quot;)
 
 tb_logger.attach_output_handler(
     trainer,
@@ -271,7 +270,7 @@ for tag, evaluator in [(&quot;training&quot;, train_evaluator), (&quot;validatio
         global_step_transform=global_step_from_engine(trainer)
     )
 </code></pre></div></section><section><h4 id=liftoff>🚀Liftoff!🚀</h4><pre><code class=language-python>trainer.run(train_loader, max_epochs=5)
-</code></pre><pre><code class=language-python data-line-numbers=1-6|8-14>Epoch[1], Iter[100] Loss: 0.19
+</code></pre><pre><code class=language-python>Epoch[1], Iter[100] Loss: 0.19
 Epoch[1], Iter[200] Loss: 0.13
 Epoch[1], Iter[300] Loss: 0.08
 Epoch[1], Iter[400] Loss: 0.11
@@ -285,11 +284,7 @@ Epoch[5], Iter[2200] Loss: 0.02
 Epoch[5], Iter[2300] Loss: 0.01
 Training Results - Epoch[5] Avg accuracy: 0.99 Avg loss: 0.02
 Validation Results - Epoch[5] Avg accuracy: 0.99 Avg loss: 0.03
-</code></pre></section><section><h4 id=inspect-the-results-in-tensorboard>Inspect the results in TensorBoard!</h4><pre><code class=language-python data-line-numbers=1|3|4>tb_logger.close()
-
-%load_ext tensorboard
-%tensorboard --logdir=.
-</code></pre></section></section><section><section data-shortcode-section><h1 id=-convert-pytorch-to-ignite->🔥 Convert PyTorch to Ignite ❤️‍🔥</h1><p>How to translate pure PyTorch code to PyTorch+Ignite</p></section><section><img height=600 src=images/1.png></section><section><img height=600 src=images/2.png></section><section><img height=600 src=images/3.png></section><section><img height=600 src=images/4.png></section><section><img height=600 src=images/5.png></section><section><img height=600 src=images/6.png></section><section><img height=600 src=images/7.png></section><section><img height=600 src=images/8.png></section><section><img height=600 src=images/9.png></section><section><img height=600 src=images/10.png></section></section><section><section data-shortcode-section><h1 id=about-pytorch-ignite-project>About &ldquo;PyTorch-Ignite&rdquo; project</h1><p>Community-driven open source and <em>NumFOCUS Affiliated</em> Project</p><p>maintained by volunteers in the PyTorch community:</p><pre><code>@vfdev-5, @ydcjeff, @KickItLikeShika, @sdesrozis, @alykhantejani, @anmolsjoshi,
+</code></pre></section><section><h3 id=complete-code>Complete code</h3><p><a href=https://pytorch-ignite.ai/tutorials/getting-started>https://pytorch-ignite.ai/tutorials/getting-started</a></p></section><section><h3 id=pytorch-ignite-code-generator>PyTorch-Ignite Code-Generator</h3><p><a href=https://code-generator.pytorch-ignite.ai/>https://code-generator.pytorch-ignite.ai/</a></p></section></section><section><section data-shortcode-section><h1 id=-convert-pytorch-to-ignite->🔥 Convert PyTorch to Ignite ❤️‍🔥</h1><p>How to translate pure PyTorch code to PyTorch+Ignite</p></section><section><img height=600 src=images/1.png></section><section><img height=600 src=images/2.png></section><section><img height=600 src=images/3.png></section><section><img height=600 src=images/4.png></section><section><img height=600 src=images/5.png></section><section><img height=600 src=images/6.png></section><section><img height=600 src=images/7.png></section><section><img height=600 src=images/8.png></section><section><img height=600 src=images/9.png></section><section><img height=600 src=images/10.png></section></section><section><section data-shortcode-section><h1 id=about-pytorch-ignite-project>About &ldquo;PyTorch-Ignite&rdquo; project</h1><p>Community-driven open source and <em>NumFOCUS Affiliated</em> Project</p><p>maintained by volunteers in the PyTorch community:</p><pre><code>@vfdev-5, @ydcjeff, @KickItLikeShika, @sdesrozis, @alykhantejani, @anmolsjoshi,
 @trsvchn, @Moh-Yakoub, ..., @fco-dv, @gucifer, @Priyansi, ...
 </code></pre><p><img src=https://a.slack-edge.com/production-standard-emoji-assets/13.0/apple-medium/1f389@2x.png alt=o1>
 <img src=https://a.slack-edge.com/production-standard-emoji-assets/13.0/apple-medium/1f44f@2x.png alt=o2>

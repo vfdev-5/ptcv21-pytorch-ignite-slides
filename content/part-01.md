@@ -1,4 +1,5 @@
 +++
+weight = 1
 +++
 
 
@@ -368,44 +369,57 @@ tb_logger.attach_output_handler(
 
 ---
 
-# Distributed training made easy
+# Distributed Training support
 
-- Run the same code across all supported backends seamlessly
-  - Backends from native torch distributed configuration: `nccl`, `gloo`, `mpi`
-  - Horovod framework with `gloo` or `nccl` communication backend
-  - XLA on TPUs via `pytorch/xla`
+Run the same code across all supported backends seamlessly
+
+- Backends from native torch distributed configuration: `nccl`, `gloo`, `mpi`
+- Horovod framework with `gloo` or `nccl` communication backend
+- XLA on TPUs via `pytorch/xla`
+
+<div style="font-size: 20px;">
 
 ```python
 import ignite.distributed as idist
+
+def training(local_rank, *args, **kwargs):
+    dataloder_train = idist.auto_dataloder(dataset, ...)
+
+    model = ...
+    model = idist.auto_model(model)
+
+    optimizer = ...
+    optimizer = idist.auto_optimizer(optimizer)
+
+backend = 'nccl'  # or 'gloo', 'horovod', 'xla-tpu' or None
+with idist.Parallel(backend) as parallel:
+    parallel.run(training)
 ```
+</div>
 
 ---
 
-# Distributed launchers
+# Distributed Training support
 
-- Handle distributed launchers with the same code
-  - `torch.multiprocessing.spawn`
-  - `torch.distributed.launch`
-  - `horovodrun`
-  - `slurm`
+## Distributed launchers
 
-```python
-def run(_, config):
-  # distributed function
-  # Do what you want
-
-with idist.Parallel(backend=backend) as parallel:
-    parallel.run(run, config)
-```
+Handle distributed launchers with the same code
+- `torch.multiprocessing.spawn`
+- `torch.distributed.launch`
+- `horovodrun`
+- `slurm`
 
 ---
 
-# Unified Distributed API
+# Distributed Training support
+
+## Unified Distributed API
 
 - High-level helper methods
   - `idist.auto_model()`
   - `idist.auto_optim()`
   - `idist.auto_dataloader()`
+
 - Collective operations
   - `all_reduce`, `all_gather`, and more
 

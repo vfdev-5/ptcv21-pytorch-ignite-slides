@@ -1,4 +1,5 @@
 +++
+weight = 4
 +++
 
 <!-- Start vertical slides -->
@@ -40,6 +41,8 @@ More details here: https://pytorch-ignite.ai/ecosystem/
 
 # Community Engagement
 
+<div style="font-size: 24px;">
+
 - Google Summer of Code 2021
   - Mentored two great students (_Ahmed_ and _Arpan_)
 
@@ -50,6 +53,10 @@ More details here: https://pytorch-ignite.ai/ecosystem/
 
 - PyData Global Mentored Sprint 2020
 
+- Our new website development (thanks to _Jeff Yang_!)
+
+- PyTorch-Ignite Code-Generator project
+
 _Stay tuned for upcoming events ..._
 
 <img width="50" src="https://summerofcode.withgoogle.com/static/img/summer-of-code-logo.svg">
@@ -57,6 +64,7 @@ _Stay tuned for upcoming events ..._
 <img width="50" src="https://hacktoberfestswaglist.com/img/Hacktoberfest_20.jpg">
 <img width="150" src="https://pydata.org/global2021/wp-content/uploads/2021/06/logo.png">
 
+</div>
 
 ---
 
@@ -77,31 +85,13 @@ Everyone is welcome to contribute
     <span class="icon"><i class="fab fa-discord"></i></span>
 </a>
 
-How to start:
+{{< add_vspace >}}
+
+#### How to start:
 
 - Read our [Contributing guides](https://github.com/pytorch/ignite/blob/master/CONTRIBUTING.md)
 - Pick [List of Help-wanted GH issue](https://github.com/pytorch/ignite/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 - Reach out to us on GH or Discord for more guidance
-
----
-
-Follow us on
-
-<a class="level-item" href="https://www.twitter.com/pytorch_ignite">
-    <span class="icon"><i class="fab fa-twitter"></i></span>
-</a>
-
-<a class="level-item" href="https://www.facebook.com/PyTorch-Ignite-Community-105837321694508">
-    <span class="icon"><i class="fab fa-facebook"></i></span>
-</a>
-
-<a class="level-item" href="https://dev.to/pytorch-ignite">
-    <span class="icon"><i class="fab fa-dev"></i></span>
-</a>
-
-and check out our new website:
-
-https://pytorch-ignite.ai
 
 <!-- End vertical slides -->
 {{% /section %}}

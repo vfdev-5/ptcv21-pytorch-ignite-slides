@@ -1,4 +1,5 @@
 +++
+weight = 3
 +++
 
 <!-- Start vertical slides -->
@@ -6,45 +7,47 @@
 
 # Convert PyTorch to Ignite
 
----
-
-{{< figure src="images/1.png" >}}
+How to translate pure PyTorch code to PyTorch+Ignite
 
 ---
 
-{{< figure src="images/2.png" >}}
+<img height="600" src="images/1.png"/>
 
 ---
 
-{{< figure src="images/3.png" >}}
+<img height="600" src="images/2.png"/>
 
 ---
 
-{{< figure src="images/4.png" >}}
+<img height="600" src="images/3.png"/>
 
 ---
 
-{{< figure src="images/5.png" >}}
+<img height="600" src="images/4.png"/>
 
 ---
 
-{{< figure src="images/6.png" >}}
+<img height="600" src="images/5.png"/>
 
 ---
 
-{{< figure src="images/7.png" >}}
+<img height="600" src="images/6.png"/>
 
 ---
 
-{{< figure src="images/8.png" >}}
+<img height="600" src="images/7.png"/>
 
 ---
 
-{{< figure src="images/9.png" >}}
+<img height="600" src="images/8.png"/>
 
 ---
 
-{{< figure src="images/10.png" >}}
+<img height="600" src="images/9.png"/>
+
+---
+
+<img height="600" src="images/10.png"/>
 
 <!-- End vertical slides -->
 {{% /section %}}

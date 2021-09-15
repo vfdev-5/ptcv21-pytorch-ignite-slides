@@ -53,7 +53,7 @@ from ignite.metrics import Accuracy
 # Setup training engine:
 def train_step(engine, batch):
     # Users can do whatever they need on a single iteration
-    # Eg. forward/backward pass for any number of models, optimizers, etc
+    # Eg. forward/backward pass for any number of models, optimizers, etc.
     # ...
 
 trainer = Engine(train_step)
@@ -138,7 +138,7 @@ recall = Recall(average=False)
 F1_per_class = (precision * recall * 2 / (precision + recall))
 F1_mean = F1_per_class.mean()  # torch mean method
 F1_mean.attach(engine, &quot;F1&quot;)
-</code></pre></section><section><h1 id=built-in-handlers>Built-in Handlers</h1><table style=font-size:20px><tr><td><div style=color:transparent>.</div><ul><li>Logging to experiment tracking systems</li><li>Checkpointing,</li><li>Early stopping</li><li>Profiling</li><li>Parameter scheduling</li><li>etc</li></ul></td><td><pre><code class=language-python># model checkpoint handler
+</code></pre></section><section><h1 id=built-in-handlers>Built-in Handlers</h1><table style=font-size:20px><tr><td><div style=color:transparent>.</div><ul><li>Logging to experiment tracking systems</li><li>Checkpointing,</li><li>Early stopping</li><li>Profiling</li><li>Parameter scheduling</li><li>etc.</li></ul></td><td><pre><code class=language-python># model checkpoint handler
 checkpoint = ModelChckpoint('/tmp/ckpts', 'training')
 trainer.add_event_handler(Events.EPOCH_COMPLETED(every=2), handler, {'model': model})
 

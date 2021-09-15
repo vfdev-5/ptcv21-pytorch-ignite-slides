@@ -34,7 +34,7 @@ from torchvision.datasets import MNIST
 from torchvision.models import resnet18
 from torchvision.transforms import Compose, Normalize, ToTensor
 
-from ignite.engine import Engine, Events, create_supervised_trainer, create_supervised_evaluator
+from ignite.engine import Events, create_supervised_trainer, create_supervised_evaluator
 from ignite.metrics import Accuracy, Loss
 from ignite.handlers import ModelCheckpoint
 from ignite.contrib.handlers import TensorboardLogger
@@ -78,7 +78,7 @@ criterion = nn.CrossEntropyLoss()
 
 ### Here goes PyTorch-Ignite!
 
-```python{1|3-6|8|9}
+```python{1|3-6|8}
 trainer = create_supervised_trainer(model, optimizer, criterion, device)
 
 val_metrics = {
@@ -86,13 +86,11 @@ val_metrics = {
     "loss": Loss(criterion)
 }
 
-train_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=device)
-val_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=device)
+evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=device)
 ```
 
 - `trainer` engine to train the model
-- `train_evaluator` engine to compute metrics on training set
-- `val_evaluator` engine to compute metrics on validation set + save the best models
+- `evaluator` engine to compute metrics on validation set + save the best models
 
 ---
 
@@ -100,23 +98,15 @@ val_evaluator = create_supervised_evaluator(model, metrics=val_metrics, device=d
 
 <div style="font-size: 26px;">
 
-```python{1-3|5-11|13-19}
+```python{1-3|5-11}
 @trainer.on(Events.ITERATION_COMPLETED(every=100))
 def log_training_loss(engine):
     print(f"Epoch[{engine.state.epoch}], Iter[{engine.state.iteration}] Loss: {engine.state.output:.2f}")
 
 @trainer.on(Events.EPOCH_COMPLETED)
-def log_training_results(trainer):
-    train_evaluator.run(train_loader)
-    metrics = train_evaluator.state.metrics
-    print(f"Training Results - Epoch[{trainer.state.epoch}] "
-          f"Avg accuracy: {metrics['accuracy']:.2f} "
-          f"Avg loss: {metrics['loss']:.2f}")
-
-@trainer.on(Events.EPOCH_COMPLETED)
 def log_validation_results(trainer):
-    val_evaluator.run(val_loader)
-    metrics = val_evaluator.state.metrics
+    evaluator.run(val_loader)
+    metrics = evaluator.state.metrics
     print(f"Validation Results - Epoch[{trainer.state.epoch}] "
           f"Avg accuracy: {metrics['accuracy']:.2f} "
           f"Avg loss: {metrics['loss']:.2f}")
@@ -137,7 +127,7 @@ model_checkpoint = ModelCheckpoint(
     score_name="accuracy",
 )
 
-val_evaluator.add_event_handler(Events.COMPLETED, model_checkpoint, {"model": model})
+evaluator.add_event_handler(Events.COMPLETED, model_checkpoint, {"model": model})
 ```
 
 ---
@@ -156,14 +146,13 @@ tb_logger.attach_output_handler(
     output_transform=lambda loss: {"batch_loss": loss},
 )
 
-for tag, evaluator in [("training", train_evaluator), ("validation", val_evaluator)]:
-    tb_logger.attach_output_handler(
-        evaluator,
-        event_name=Events.EPOCH_COMPLETED,
-        tag=tag,
-        metric_names="all",
-        global_step_transform=global_step_from_engine(trainer)
-    )
+tb_logger.attach_output_handler(
+    evaluator,
+    event_name=Events.EPOCH_COMPLETED,
+    tag="validation",
+    metric_names="all",
+    global_step_transform=global_step_from_engine(trainer)
+)
 ```
 
 </div>

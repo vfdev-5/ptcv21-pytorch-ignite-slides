@@ -82,6 +82,11 @@ trainer.add_event_handler(
 - Simple and understandable code
 - Open-source community involvement
 
+---
+
+Alice: _How it differs from other similar project?_
+
+Bob: _See other PyTorch Community Voices editions :)_
 
 <!--
 - A library at the crossroads
@@ -332,7 +337,7 @@ F1_mean.attach(engine, "F1")
 
 ```python
 # model checkpoint handler
-checkpoint = ModelChckpoint('/tmp/ckpts', 'training')
+checkpoint = ModelCheckpoint('/tmp/ckpts', 'training')
 trainer.add_event_handler(Events.EPOCH_COMPLETED(every=2), handler, {'model': model})
 
 # early stopping handler

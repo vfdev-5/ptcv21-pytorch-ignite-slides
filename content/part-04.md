@@ -61,7 +61,7 @@ _Stay tuned for upcoming events ..._
 
 <img width="50" src="https://summerofcode.withgoogle.com/static/img/summer-of-code-logo.svg">
 <img width="50" src="https://developers.google.com/season-of-docs/images/SeasonofDocs_Icon_Grey_300ppi_trimmed_480.png">
-<img width="50" src="https://hacktoberfestswaglist.com/img/Hacktoberfest_20.jpg">
+<img width="50" src="https://hacktoberfestswaglist.com/img/Hacktoberfest_21.jpg">
 <img width="150" src="https://pydata.org/global2021/wp-content/uploads/2021/06/logo.png">
 
 </div>

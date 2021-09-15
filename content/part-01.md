@@ -166,7 +166,7 @@ from ignite.metrics import Accuracy
 # Setup training engine:
 def train_step(engine, batch):
     # Users can do whatever they need on a single iteration
-    # Eg. forward/backward pass for any number of models, optimizers, etc
+    # Eg. forward/backward pass for any number of models, optimizers, etc.
     # ...
 
 trainer = Engine(train_step)
@@ -323,7 +323,7 @@ F1_mean.attach(engine, "F1")
 - Early stopping
 - Profiling
 - Parameter scheduling
-- etc
+- etc.
 
 
 </td>

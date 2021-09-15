@@ -23,8 +23,12 @@ maintained by volunteers in the PyTorch community:
 With the support of:
 
 <img width="200" src="https://numfocus.org/wp-content/uploads/2017/07/NumFocus_LRG.png">
+
 <img width="200" src="https://raw.githubusercontent.com/Quansight-Labs/quansight-labs-site/master/files/images/QuansightLabs_logo_V2.png">
+
 <img width="200" src="https://pytorch-ignite.ai/images/logos/ifpen.jpg">
+
+<img width="110" src="https://d1.awsstatic.com/logos/aws-logo/full-color/AWS-Logo_Full-Color_1000x600.23165eb2b9af9cc8e068e74fbabc28222d091298.png">
 
 ---
 

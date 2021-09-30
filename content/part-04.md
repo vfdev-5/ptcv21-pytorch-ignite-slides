@@ -26,7 +26,7 @@ With the support of:
 
 <img width="200" src="https://raw.githubusercontent.com/Quansight-Labs/quansight-labs-site/master/files/images/QuansightLabs_logo_V2.png">
 
-<img width="200" src="https://pytorch-ignite.ai/images/logos/ifpen.jpg">
+<img width="200" src="https://raw.githubusercontent.com/pytorch-ignite/pytorch-ignite.ai/main/static/_images/ifpen.png">
 
 <img width="110" src="https://d1.awsstatic.com/logos/aws-logo/full-color/AWS-Logo_Full-Color_1000x600.23165eb2b9af9cc8e068e74fbabc28222d091298.png">
 
